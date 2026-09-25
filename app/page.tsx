@@ -99,7 +99,7 @@ export default function Home() {
 
       <section className="section toolsSection">
         <div className="container toolsLayout">
-          <div><p className="eyebrow">TOOLS / LAB</p><h2>Herramientas para planificar, analizar y decidir</h2><p>Recursos prácticos creados desde la experiencia real de gestión para trabajar proyectos tecnológicos con más claridad y control.</p><Link className="button buttonPrimary" href="/tools">Ver todas las herramientas <span>→</span></Link></div>
+          <div><p className="eyebrow">APT LAB</p><h2>Herramientas para planificar, analizar y decidir</h2><p>Recursos prácticos creados desde la experiencia real de gestión para trabajar proyectos tecnológicos con más claridad y control.</p><Link className="button buttonPrimary" href="/tools">Entrar en APT Lab <span>→</span></Link></div>
           <div className="toolGrid">{tools.map(([title,text,href,status])=><article className="toolCard" key={title}><span className={`statusPill ${status === "Disponible" ? "live" : ""}`}>{status}</span><h3>{title}</h3><p>{text}</p><Link href={href}>{status === "Disponible" ? "Abrir herramienta" : "Ver roadmap"} →</Link></article>)}</div>
         </div>
       </section>
