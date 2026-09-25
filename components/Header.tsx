@@ -18,7 +18,7 @@ export function Header() {
         <Logo />
         <nav className="desktopNav" aria-label="Navegación principal">
           {site.nav.map(([label, href]) => {
-            const active = pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
+            const active = pathname === href || pathname.startsWith(`${href}/`);
             return <Link className={active ? "navActive" : ""} key={href} href={href}>{label}</Link>;
           })}
         </nav>
@@ -39,7 +39,7 @@ export function Header() {
       <div id="mobile-navigation" className={`mobileMenu ${open ? "open" : ""}`}>
         <nav className="container mobileNav" aria-label="Navegación móvil">
           {site.nav.map(([label, href]) => {
-            const active = pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
+            const active = pathname === href || pathname.startsWith(`${href}/`);
             return <Link className={active ? "navActive" : ""} key={href} href={href}>{label}<span>→</span></Link>;
           })}
           <Link className="button buttonPrimary mobileContact" href="/contacto">Cuéntame tu proyecto <span>→</span></Link>
