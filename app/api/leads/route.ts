@@ -15,8 +15,13 @@ type DeliveryPlannerPayload = {
   result?: Record<string, unknown>;
 };
 
+type ExecutiveStatusPayload = {
+  inputs?: Record<string, unknown>;
+  output?: string;
+};
+
 const allowedProfiles = new Set(["empresa", "emprendedor", "profesional"]);
-const allowedSources = new Set(["website", "contact", "project-health-check", "delivery-planner"]);
+const allowedSources = new Set(["website", "contact", "project-health-check", "delivery-planner", "executive-status-generator"]);
 
 function emailLooksValid(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -66,6 +71,20 @@ function normaliseDeliveryPlanner(value: unknown): DeliveryPlannerPayload | null
   return { inputs: cleanObject(input.inputs), result: cleanObject(input.result) };
 }
 
+function normaliseExecutiveStatus(value: unknown): ExecutiveStatusPayload | null {
+  if (!value || typeof value !== "object") return null;
+  const input = value as ExecutiveStatusPayload;
+  const cleanObject = (obj: unknown) => {
+    if (!obj || typeof obj !== "object") return undefined;
+    return Object.fromEntries(
+      Object.entries(obj as Record<string, unknown>)
+        .slice(0, 20)
+        .map(([key, val]) => [cleanText(key, 80), cleanText(val, 2000)])
+    );
+  };
+  return { inputs: cleanObject(input.inputs), output: cleanText(input.output, 10000) };
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -83,12 +102,15 @@ export async function POST(request: Request) {
     const source = allowedSources.has(sourceInput) ? sourceInput : "website";
     const healthCheck = normaliseHealthCheck(body.healthCheck);
     const deliveryPlanner = normaliseDeliveryPlanner(body.deliveryPlanner);
+    const executiveStatus = normaliseExecutiveStatus(body.executiveStatus);
     const suppliedMessage = cleanText(body.message, 4000);
     const message = suppliedMessage || (healthCheck
       ? `Solicitud de revisión tras Project Health Check (${healthCheck.score}/100 - ${healthCheck.band || "sin clasificación"}).`
       : deliveryPlanner
         ? "Solicitud de revisión tras utilizar Delivery Planner."
-        : "");
+        : executiveStatus
+          ? "Solicitud de revisión tras utilizar Executive Status Generator."
+          : "");
     const consent = body.consent === "yes" || body.consent === true;
 
     const attribution = {
@@ -135,6 +157,7 @@ export async function POST(request: Request) {
       metadata: {
         ...(healthCheck ? { project_health_check: healthCheck } : {}),
         ...(deliveryPlanner ? { delivery_planner: deliveryPlanner } : {}),
+        ...(executiveStatus ? { executive_status: executiveStatus } : {}),
       },
       ...attribution,
     };

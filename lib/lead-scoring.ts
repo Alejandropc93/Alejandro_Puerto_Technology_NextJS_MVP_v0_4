@@ -20,6 +20,7 @@ export function scoreLead(input: ScoreInput) {
   if (input.message.trim().length >= 80) score += 10;
   if (input.source === "project-health-check") score += 20;
   else if (input.source === "delivery-planner") score += 18;
+  else if (input.source === "executive-status-generator") score += 16;
   else if (input.source === "contact") score += 10;
 
   if (typeof input.healthScore === "number") {
