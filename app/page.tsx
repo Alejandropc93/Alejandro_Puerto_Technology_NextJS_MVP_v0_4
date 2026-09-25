@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { SectionHeading } from "@/components/SectionHeading";
 
@@ -20,33 +21,57 @@ const tools = [
 export default function Home() {
   return (
     <>
-      <section className="hero">
-        <div className="container heroGrid">
+      <section className="hero heroPersonal">
+        <div className="container heroGrid heroPersonalGrid">
           <div className="heroCopy">
             <p className="eyebrow eyebrowLight">TECHNOLOGY & DELIVERY CONSULTANT</p>
             <h1>De la idea<br />a la <span>ejecución.</span></h1>
             <p className="heroLead">Ayudo a empresas, equipos y emprendedores a convertir ideas y proyectos tecnológicos en planes claros, ejecutables y orientados a resultados.</p>
             <div className="buttonRow">
               <Link className="button buttonPrimary" href="/contacto">Hablemos de tu proyecto <span>→</span></Link>
-              <Link className="button buttonGhost" href="/servicios">Ver servicios</Link>
+              <Link className="button buttonGhost" href="/tools">Probar herramientas</Link>
             </div>
             <div className="heroProof">
               <div><strong>Claridad</strong><span>en la estrategia</span></div>
               <div><strong>Control</strong><span>en la ejecución</span></div>
-              <div><strong>Resultados</strong><span>medibles</span></div>
+              <div><strong>Trato directo</strong><span>sin intermediarios</span></div>
             </div>
           </div>
-          <div className="heroVisual" aria-label="Representación visual de planificación y delivery">
-            <div className="visualGlow" />
-            <div className="visualNote">Proyectos tecnológicos<br /><strong>con claridad, confianza<br />y ejecución.</strong></div>
-            <div className="dashboardCard">
-              <div className="dashTop"><span>Delivery overview</span><span>Q4</span></div>
-              <div className="dashBars">
-                {[78, 56, 92, 68, 84].map((w, i) => <span key={i} style={{ width: `${w}%` }} />)}
+
+          <div className="personalHeroVisual">
+            <div className="personalPhotoFrame">
+              <Image
+                src="/alejandro-puerto.jpg"
+                alt="Alejandro Puerto, Technology & Delivery Consultant"
+                fill
+                priority
+                sizes="(max-width: 980px) 80vw, 42vw"
+                className="personalHeroPhoto"
+              />
+              <div className="personalPhotoShade" />
+              <div className="personalPhotoCaption">
+                <strong>Alejandro Puerto</strong>
+                <span>Technology · Delivery · Project Management</span>
               </div>
-              <div className="dashStats"><div><b>8</b><small>Hitos</small></div><div><b>3</b><small>Riesgos</small></div><div><b>86%</b><small>Avance</small></div></div>
+            </div>
+            <div className="heroFloatingCard heroFloatingCardTop">
+              <span>01</span>
+              <div><strong>Visión técnica + gestión</strong><small>Traducir complejidad en decisiones.</small></div>
+            </div>
+            <div className="heroFloatingCard heroFloatingCardBottom">
+              <span>02</span>
+              <div><strong>Acompañamiento real</strong><small>De la definición al delivery.</small></div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="trustBand">
+        <div className="container trustBandGrid">
+          <span>Un único interlocutor</span>
+          <span>Gestión con criterio técnico</span>
+          <span>Comunicación ejecutiva clara</span>
+          <span>Herramientas propias de apoyo</span>
         </div>
       </section>
 
@@ -74,20 +99,22 @@ export default function Home() {
 
       <section className="section toolsSection">
         <div className="container toolsLayout">
-          <div><p className="eyebrow">TOOLS / LAB</p><h2>Herramientas para planificar, analizar y decidir</h2><p>Recursos prácticos para trabajar proyectos tecnológicos con más claridad y control.</p><Link className="button buttonPrimary" href="/tools">Ver todas las herramientas <span>→</span></Link></div>
+          <div><p className="eyebrow">TOOLS / LAB</p><h2>Herramientas para planificar, analizar y decidir</h2><p>Recursos prácticos creados desde la experiencia real de gestión para trabajar proyectos tecnológicos con más claridad y control.</p><Link className="button buttonPrimary" href="/tools">Ver todas las herramientas <span>→</span></Link></div>
           <div className="toolGrid">{tools.map(([title,text,href,status])=><article className="toolCard" key={title}><span className={`statusPill ${status === "Disponible" ? "live" : ""}`}>{status}</span><h3>{title}</h3><p>{text}</p><Link href={href}>{status === "Disponible" ? "Abrir herramienta" : "Ver roadmap"} →</Link></article>)}</div>
         </div>
       </section>
 
-      <section className="section darkSection">
-        <div className="container aboutHome">
-          <div className="portraitPlaceholder"><span>AP</span></div>
-          <div><p className="eyebrow eyebrowLight">SOBRE MÍ</p><h2>Experiencia, cercanía y enfoque en la ejecución</h2><p>Trabajo alrededor de proyectos tecnológicos, coordinación de equipos, proveedores, planificación, riesgos y comunicación ejecutiva. Mi objetivo es aportar claridad y estructura para que las iniciativas avancen.</p><Link className="button buttonGhost" href="/sobre-mi">Conoce mi trayectoria <span>→</span></Link></div>
+      <section className="section darkSection personalAboutSection">
+        <div className="container aboutHome personalAboutHome">
+          <div className="aboutPhotoFrame">
+            <Image src="/alejandro-puerto.jpg" alt="Alejandro Puerto" fill sizes="(max-width: 980px) 80vw, 30vw" className="aboutPhoto" />
+          </div>
+          <div><p className="eyebrow eyebrowLight">SOBRE MÍ</p><h2>Experiencia, cercanía y enfoque en la ejecución</h2><p>Trabajo en el punto donde se cruzan tecnología, negocio, personas, proveedores y fechas. Mi forma de aportar valor es convertir esa complejidad en un plan entendible y acompañarlo hasta que las cosas ocurren.</p><p className="aboutSignature">“Que un proyecto avance no depende solo de tener un plan; depende de entender qué decisión toca tomar en cada momento.”</p><Link className="button buttonGhost" href="/sobre-mi">Conoce cómo trabajo <span>→</span></Link></div>
           <div className="aboutBullets"><span>◎ Gestión de proyectos</span><span>⚙ Delivery y ejecución</span><span>◇ Consultoría tecnológica</span><span>○ Mentoring y formación</span></div>
         </div>
       </section>
 
-      <section className="finalCta"><div className="container finalCtaInner"><div><p className="eyebrow eyebrowLight">TU PROYECTO, BIEN ACOMPAÑADO</p><h2>Hablemos de tu próximo proyecto</h2><p>Cuéntame dónde estás y qué necesitas conseguir.</p></div><Link className="button buttonLight" href="/contacto">Contactar ahora <span>→</span></Link></div></section>
+      <section className="finalCta"><div className="container finalCtaInner"><div><p className="eyebrow eyebrowLight">TU PROYECTO, BIEN ACOMPAÑADO</p><h2>Hablemos de tu próximo proyecto</h2><p>Cuéntame dónde estás, qué quieres conseguir y qué te está frenando.</p></div><Link className="button buttonLight" href="/contacto">Contactar con Alejandro <span>→</span></Link></div></section>
     </>
   );
 }
