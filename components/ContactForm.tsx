@@ -30,11 +30,8 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
 
       setState("success");
       form.reset();
-      if (payload.persisted) {
-        router.push("/gracias?source=contact");
-        return;
-      }
-      setMessage("Solicitud validada correctamente. La persistencia se activará al conectar Supabase.");
+
+      router.push("/gracias?source=contact");
     } catch (error) {
       setState("error");
       setMessage(error instanceof Error ? error.message : "Ha ocurrido un error.");
