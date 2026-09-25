@@ -1,8 +1,8 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getLeadAttribution } from "@/lib/client-tracking";
+import { getLeadAttribution, trackEvent } from "@/lib/client-tracking";
 
 type FormState = "idle" | "sending" | "success" | "error";
 
@@ -10,6 +10,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
   const router = useRouter();
   const [state, setState] = useState<FormState>("idle");
   const [message, setMessage] = useState("");
+  const started = useRef(false);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -29,8 +30,8 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       if (!response.ok) throw new Error(payload.error || "No se pudo enviar la solicitud.");
 
       setState("success");
+      trackEvent("lead_submitted", { source: "contact" });
       form.reset();
-
       router.push("/gracias?source=contact");
     } catch (error) {
       setState("error");
@@ -39,7 +40,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <form className={compact ? "leadForm compactForm" : "leadForm"} onSubmit={submit}>
+    <form className={compact ? "leadForm compactForm" : "leadForm"} onSubmit={submit} onFocus={() => { if (!started.current) { started.current = true; trackEvent("form_started", { source: "contact" }); } }}>
       <div className="fieldRow">
         <label>Nombre<input name="name" required minLength={2} placeholder="Tu nombre" /></label>
         <label>Email<input name="email" required type="email" placeholder="tu@email.com" /></label>

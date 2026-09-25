@@ -2,7 +2,7 @@
 
 import { FormEvent, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getLeadAttribution } from "@/lib/client-tracking";
+import { getLeadAttribution, trackEvent } from "@/lib/client-tracking";
 
 type Question = { id: string; area: string; text: string };
 type CaptureState = "idle" | "sending" | "success" | "error";
@@ -44,6 +44,10 @@ export function ProjectHealthCheck() {
   function submit(event: FormEvent) {
     event.preventDefault();
     setSubmitted(true);
+    if (completed === questions.length) {
+      const total = Object.values(answers).reduce((a, b) => a + b, 0);
+      trackEvent("health_check_completed", { score: Math.round((total / (questions.length * 5)) * 100) });
+    }
   }
 
   const result = score === null ? null : band(score);
@@ -83,12 +87,9 @@ export function ProjectHealthCheck() {
       if (!response.ok) throw new Error(payload.error || "No se pudo enviar la solicitud.");
 
       setCaptureState("success");
+      trackEvent("lead_submitted", { source: "project-health-check", healthScore: score });
       form.reset();
-      if (payload.persisted) {
-        router.push("/gracias?source=project-health-check");
-        return;
-      }
-      setCaptureMessage("Solicitud validada. Cuando conectemos Supabase, el diagnóstico quedará almacenado automáticamente con el lead.");
+      router.push("/gracias?source=project-health-check");
     } catch (error) {
       setCaptureState("error");
       setCaptureMessage(error instanceof Error ? error.message : "Ha ocurrido un error.");
@@ -119,7 +120,10 @@ export function ProjectHealthCheck() {
                     name={question.id}
                     value={value}
                     checked={answers[question.id] === value}
-                    onChange={() => setAnswers((current) => ({ ...current, [question.id]: value }))}
+                    onChange={() => {
+                    if (Object.keys(answers).length === 0) trackEvent("health_check_started");
+                    setAnswers((current) => ({ ...current, [question.id]: value }));
+                  }}
                   />
                   <span>{value}</span>
                 </label>

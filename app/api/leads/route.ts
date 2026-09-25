@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { notifyNewLead } from "@/lib/lead-notification";
+import { scoreLead } from "@/lib/lead-scoring";
 
 type HealthCheckPayload = {
   score?: number;
@@ -85,6 +86,15 @@ export async function POST(request: Request) {
       );
     }
 
+    const commercialScore = scoreLead({
+      profile,
+      company: company || null,
+      message,
+      source,
+      healthScore: healthCheck?.score ?? null,
+      utmCampaign: attribution.utm_campaign,
+    });
+
     const lead = {
       name,
       email,
@@ -94,6 +104,9 @@ export async function POST(request: Request) {
       consent_at: new Date().toISOString(),
       source,
       status: "new",
+      status_updated_at: new Date().toISOString(),
+      lead_score: commercialScore.score,
+      lead_priority: commercialScore.priority,
       health_score: healthCheck?.score ?? null,
       health_band: healthCheck?.band || null,
       metadata: healthCheck ? { project_health_check: healthCheck } : {},

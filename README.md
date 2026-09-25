@@ -125,3 +125,24 @@ npm run lint
 npm run build
 npm run start
 ```
+
+## Panel comercial privado (v0.4 activa)
+
+La ruta `/admin` permite acceder a un panel privado con leads, prioridad comercial, estado y conversión de los últimos 30 días.
+
+Añade en Vercel dos variables **Secret**:
+
+- `ADMIN_DASHBOARD_PASSWORD`: contraseña que usarás para entrar.
+- `ADMIN_DASHBOARD_SECRET`: cadena aleatoria larga para firmar la sesión (idealmente 32+ bytes aleatorios).
+
+Después ejecuta de nuevo `supabase/schema.sql` para crear `analytics_events` y añadir `lead_score`, `lead_priority` y `status_updated_at`.
+
+El scoring es orientativo para priorización comercial interna. No sustituye la revisión humana del lead.
+
+### Cambios incorporados en la v0.4 activa
+- Redirección estable a `/gracias` tras envío correcto.
+- Analítica propia en `analytics_events` (page views, formularios, Health Check y conversiones).
+- Persistencia de atribución UTM durante la sesión.
+- Lead scoring interno 0-100 y prioridad low/medium/high.
+- Panel privado `/admin/leads` con métricas, leads y actualización de estado.
+- Sesión admin firmada mediante cookie HttpOnly.

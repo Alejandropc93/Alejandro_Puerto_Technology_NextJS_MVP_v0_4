@@ -12,6 +12,8 @@ type LeadForNotification = {
   utm_medium?: string | null;
   utm_campaign?: string | null;
   landing_page?: string | null;
+  lead_score?: number | null;
+  lead_priority?: string | null;
 };
 
 function esc(value: unknown) {
@@ -55,6 +57,7 @@ export async function notifyNewLead(lead: LeadForNotification) {
             <tr><td><strong>Perfil</strong></td><td>${esc(lead.profile)}</td></tr>
             <tr><td><strong>Empresa / proyecto</strong></td><td>${esc(lead.company || "-")}</td></tr>
             <tr><td><strong>Origen</strong></td><td>${esc(lead.source)}</td></tr>
+            <tr><td><strong>Prioridad comercial</strong></td><td>${esc(lead.lead_score ?? "-")}/100 · ${esc(lead.lead_priority || "-")}</td></tr>
             ${health}
             <tr><td><strong>UTM source</strong></td><td>${esc(lead.utm_source || "-")}</td></tr>
             <tr><td><strong>UTM medium</strong></td><td>${esc(lead.utm_medium || "-")}</td></tr>
