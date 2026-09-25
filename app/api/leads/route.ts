@@ -10,8 +10,13 @@ type HealthCheckPayload = {
   weakestAreas?: string[];
 };
 
+type DeliveryPlannerPayload = {
+  inputs?: Record<string, unknown>;
+  result?: Record<string, unknown>;
+};
+
 const allowedProfiles = new Set(["empresa", "emprendedor", "profesional"]);
-const allowedSources = new Set(["website", "contact", "project-health-check"]);
+const allowedSources = new Set(["website", "contact", "project-health-check", "delivery-planner"]);
 
 function emailLooksValid(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -46,6 +51,21 @@ function normaliseHealthCheck(value: unknown): HealthCheckPayload | null {
   };
 }
 
+
+function normaliseDeliveryPlanner(value: unknown): DeliveryPlannerPayload | null {
+  if (!value || typeof value !== "object") return null;
+  const input = value as DeliveryPlannerPayload;
+  const cleanObject = (obj: unknown) => {
+    if (!obj || typeof obj !== "object") return undefined;
+    return Object.fromEntries(
+      Object.entries(obj as Record<string, unknown>)
+        .slice(0, 30)
+        .map(([key, val]) => [cleanText(key, 80), typeof val === "number" || typeof val === "boolean" || val === null ? val : cleanText(val, 300)])
+    );
+  };
+  return { inputs: cleanObject(input.inputs), result: cleanObject(input.result) };
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -62,10 +82,13 @@ export async function POST(request: Request) {
     const sourceInput = cleanText(body.source, 60);
     const source = allowedSources.has(sourceInput) ? sourceInput : "website";
     const healthCheck = normaliseHealthCheck(body.healthCheck);
+    const deliveryPlanner = normaliseDeliveryPlanner(body.deliveryPlanner);
     const suppliedMessage = cleanText(body.message, 4000);
     const message = suppliedMessage || (healthCheck
       ? `Solicitud de revisión tras Project Health Check (${healthCheck.score}/100 - ${healthCheck.band || "sin clasificación"}).`
-      : "");
+      : deliveryPlanner
+        ? "Solicitud de revisión tras utilizar Delivery Planner."
+        : "");
     const consent = body.consent === "yes" || body.consent === true;
 
     const attribution = {
@@ -109,7 +132,10 @@ export async function POST(request: Request) {
       lead_priority: commercialScore.priority,
       health_score: healthCheck?.score ?? null,
       health_band: healthCheck?.band || null,
-      metadata: healthCheck ? { project_health_check: healthCheck } : {},
+      metadata: {
+        ...(healthCheck ? { project_health_check: healthCheck } : {}),
+        ...(deliveryPlanner ? { delivery_planner: deliveryPlanner } : {}),
+      },
       ...attribution,
     };
 

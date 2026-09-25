@@ -5,7 +5,7 @@ export const metadata: Metadata = { title: "Tools / Lab" };
 
 const roadmap = [
   ["Project Health Check", "Disponible", "/project-health-check", "Evalúa diez dimensiones del proyecto y obtiene una lectura inicial con prioridades."],
-  ["Delivery Planner", "Roadmap", "#", "Capacidad, FTE, vacaciones, dependencias y fecha objetivo en un único escenario."],
+  ["Delivery Planner", "Disponible", "/delivery-planner", "Capacidad, FTE, vacaciones, dependencias y fecha objetivo en escenarios comparables."],
   ["MVP Planner", "Roadmap", "#", "Estructura problema, usuario, funcionalidades, prioridades y alcance mínimo viable."],
   ["Executive Status Generator", "Roadmap", "#", "Transforma datos de proyecto en un estado ejecutivo breve, claro y accionable."],
 ];

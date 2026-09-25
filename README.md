@@ -146,3 +146,18 @@ El scoring es orientativo para priorización comercial interna. No sustituye la 
 - Lead scoring interno 0-100 y prioridad low/medium/high.
 - Panel privado `/admin/leads` con métricas, leads y actualización de estado.
 - Sesión admin firmada mediante cookie HttpOnly.
+
+## Delivery Planner (v0.4 active)
+
+Ruta: `/delivery-planner`
+
+La herramienta calcula:
+- esfuerzo ajustado por contingencia;
+- capacidad efectiva en h/día;
+- duración estimada en días laborables;
+- fecha estimada de finalización;
+- impacto de vacaciones/no disponibilidad y bloqueos;
+- FTE requerido para una fecha objetivo;
+- escenarios conservador, base y refuerzo +25%.
+
+Los eventos `delivery_planner_started` y `delivery_planner_calculated` se guardan en `analytics_events`. Si el usuario solicita revisión, el escenario queda adjunto al lead en `metadata.delivery_planner`.
