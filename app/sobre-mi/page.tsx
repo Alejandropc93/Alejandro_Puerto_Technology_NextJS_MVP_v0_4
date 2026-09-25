@@ -1,0 +1,8 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+
+export const metadata: Metadata = { title: "Sobre mí" };
+
+export default function AboutPage() {
+  return <div className="page"><section className="pageHero darkPageHero"><div className="container aboutHeroGrid"><div><p className="eyebrow eyebrowLight">SOBRE MÍ</p><h1>Gestión tecnológica con foco en las personas y en la ejecución.</h1><p>Mi trabajo está en el punto donde se cruzan negocio, tecnología, equipos, proveedores y fechas. Ahí es donde un proyecto necesita claridad y capacidad de coordinación.</p></div><div className="portraitLarge">AP</div></div></section><section className="section"><div className="container proseGrid"><div><h2>Cómo entiendo la gestión</h2><p>Un buen plan no es el que parece perfecto en una presentación. Es el que permite saber qué hay que hacer, quién debe hacerlo, qué puede bloquearlo y qué decisión toca tomar cuando la realidad cambia.</p><p>Por eso el enfoque de Alejandro Puerto Technology combina análisis, planificación, delivery, comunicación y seguimiento.</p></div><div className="principles"><article><strong>Claridad</strong><span>Convertir complejidad en decisiones.</span></article><article><strong>Confianza</strong><span>Comunicar situación y riesgos sin ruido.</span></article><article><strong>Ejecución</strong><span>Llevar los planes a acciones y entregables.</span></article><article><strong>Mejora</strong><span>Aprender del proyecto para trabajar mejor.</span></article></div></div></section><section className="inlineCta"><div className="container"><h2>Si tienes un proyecto que necesita estructura, podemos hablar.</h2><Link className="button buttonPrimary" href="/contacto">Contactar →</Link></div></section></div>;
+}
