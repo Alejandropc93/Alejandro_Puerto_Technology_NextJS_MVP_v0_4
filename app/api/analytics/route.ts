@@ -1,7 +1,15 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 
-const allowedEvents = new Set(["page_view", "form_started", "lead_submitted", "health_check_started", "health_check_completed"]);
+const allowedEvents = new Set([
+  "page_view",
+  "form_started",
+  "lead_submitted",
+  "health_check_started",
+  "health_check_completed",
+  "delivery_planner_started",
+  "delivery_planner_calculated"
+]);
 
 function clean(value: unknown, max = 500) {
   return String(value ?? "").trim().slice(0, max);
