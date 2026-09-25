@@ -13,8 +13,8 @@ const services = [
 const tools = [
   ["Project Health Check", "Diagnostica el estado de tu proyecto en minutos.", "/project-health-check", "Disponible"],
   ["Delivery Planner", "Planifica capacidad, recursos, vacaciones y fechas objetivo.", "/delivery-planner", "Disponible"],
-  ["MVP Planner", "Convierte una idea en un alcance mínimo viable y priorizado.", "/tools", "Próximamente"],
-  ["Executive Status Generator", "Estructura información de proyecto para reporting ejecutivo.", "/tools", "Próximamente"],
+  ["MVP Planner", "Convierte una idea en un alcance mínimo viable y priorizado.", "/mvp-planner", "Disponible"],
+  ["Executive Status Generator", "Estructura información de proyecto para reporting ejecutivo.", "/executive-status-generator", "Disponible"],
 ];
 
 export default function Home() {

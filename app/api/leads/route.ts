@@ -20,8 +20,15 @@ type ExecutiveStatusPayload = {
   output?: string;
 };
 
+type MvpPlannerPayload = {
+  inputs?: Record<string, unknown>;
+  metrics?: Record<string, unknown>;
+  roadmap?: Record<string, unknown> | null;
+  output?: string;
+};
+
 const allowedProfiles = new Set(["empresa", "emprendedor", "profesional"]);
-const allowedSources = new Set(["website", "contact", "project-health-check", "delivery-planner", "executive-status-generator"]);
+const allowedSources = new Set(["website", "contact", "project-health-check", "delivery-planner", "executive-status-generator", "mvp-planner"]);
 
 function emailLooksValid(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -85,6 +92,25 @@ function normaliseExecutiveStatus(value: unknown): ExecutiveStatusPayload | null
   return { inputs: cleanObject(input.inputs), output: cleanText(input.output, 10000) };
 }
 
+function normaliseMvpPlanner(value: unknown): MvpPlannerPayload | null {
+  if (!value || typeof value !== "object") return null;
+  const input = value as MvpPlannerPayload;
+  const cleanObject = (obj: unknown, maxEntries = 30) => {
+    if (!obj || typeof obj !== "object") return undefined;
+    return Object.fromEntries(
+      Object.entries(obj as Record<string, unknown>)
+        .slice(0, maxEntries)
+        .map(([key, val]) => [cleanText(key, 80), typeof val === "number" || typeof val === "boolean" || val === null ? val : cleanText(val, 2500)])
+    );
+  };
+  return {
+    inputs: cleanObject(input.inputs),
+    metrics: cleanObject(input.metrics, 15),
+    roadmap: input.roadmap === null ? null : cleanObject(input.roadmap, 15),
+    output: cleanText(input.output, 12000),
+  };
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -103,6 +129,7 @@ export async function POST(request: Request) {
     const healthCheck = normaliseHealthCheck(body.healthCheck);
     const deliveryPlanner = normaliseDeliveryPlanner(body.deliveryPlanner);
     const executiveStatus = normaliseExecutiveStatus(body.executiveStatus);
+    const mvpPlanner = normaliseMvpPlanner(body.mvpPlanner);
     const suppliedMessage = cleanText(body.message, 4000);
     const message = suppliedMessage || (healthCheck
       ? `Solicitud de revisión tras Project Health Check (${healthCheck.score}/100 - ${healthCheck.band || "sin clasificación"}).`
@@ -110,7 +137,9 @@ export async function POST(request: Request) {
         ? "Solicitud de revisión tras utilizar Delivery Planner."
         : executiveStatus
           ? "Solicitud de revisión tras utilizar Executive Status Generator."
-          : "");
+          : mvpPlanner
+            ? "Solicitud de revisión tras utilizar MVP Planner."
+            : "");
     const consent = body.consent === "yes" || body.consent === true;
 
     const attribution = {
@@ -158,6 +187,7 @@ export async function POST(request: Request) {
         ...(healthCheck ? { project_health_check: healthCheck } : {}),
         ...(deliveryPlanner ? { delivery_planner: deliveryPlanner } : {}),
         ...(executiveStatus ? { executive_status: executiveStatus } : {}),
+        ...(mvpPlanner ? { mvp_planner: mvpPlanner } : {}),
       },
       ...attribution,
     };

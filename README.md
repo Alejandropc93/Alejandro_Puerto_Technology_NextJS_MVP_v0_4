@@ -161,3 +161,6 @@ La herramienta calcula:
 - escenarios conservador, base y refuerzo +25%.
 
 Los eventos `delivery_planner_started` y `delivery_planner_calculated` se guardan en `analytics_events`. Si el usuario solicita revisión, el escenario queda adjunto al lead en `metadata.delivery_planner`.
+
+## MVP Planner (v0.4)
+Disponible en `/mvp-planner`. Genera un brief de MVP con problema, usuario, propuesta de valor, priorización MoSCoW, hipótesis, riesgos y roadmap inicial. Los eventos de analítica son `mvp_planner_started`, `mvp_planner_generated` y `mvp_planner_copied`. Las solicitudes de revisión se guardan como `source=mvp-planner` y el contexto queda en `metadata.mvp_planner`.
