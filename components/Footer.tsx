@@ -23,6 +23,7 @@ export function Footer() {
           <Link href="/emprendedores">Para emprendedores</Link>
           <Link href="/formacion">Formación & Mentoring</Link>
           <Link href="/sobre-mi">Sobre mí</Link>
+          <Link href="/recursos">Recursos & Insights</Link>
         </div>
         <div>
           <strong>APT Lab</strong>
@@ -31,6 +32,7 @@ export function Footer() {
         <div>
           <strong>Empezar</strong>
           <Link href="/tools">Explorar APT Lab</Link>
+          <Link href="/recursos">Leer recursos</Link>
           <Link href="/contacto">Hablemos de tu proyecto</Link>
         </div>
       </div>

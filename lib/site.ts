@@ -8,6 +8,7 @@ export const site = {
     ["Emprendedores", "/emprendedores"],
     ["Formación", "/formacion"],
     ["APT Lab", "/tools"],
+    ["Recursos", "/recursos"],
     ["Sobre mí", "/sobre-mi"],
   ] as const,
 };

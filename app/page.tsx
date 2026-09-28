@@ -104,6 +104,23 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section homeInsightsSection">
+        <div className="container">
+          <div className="resourcesSectionHead">
+            <div><p className="eyebrow">APT INSIGHTS</p><h2>Ideas para gestionar mejor antes de necesitar ayuda.</h2></div>
+            <p>Guías breves sobre control de proyectos, delivery, definición de MVP y comunicación ejecutiva, conectadas con herramientas que puedes probar directamente.</p>
+          </div>
+          <div className="homeInsightsGrid">
+            {[
+              ["Project Management", "Cómo saber si tu proyecto está realmente bajo control", "/recursos/como-saber-si-tu-proyecto-esta-bajo-control"],
+              ["Delivery", "Cómo estimar fechas de delivery sin engañarte con la capacidad", "/recursos/como-estimar-fechas-de-delivery-sin-enganarte"],
+              ["Emprendimiento", "Cómo definir un MVP sin construir de más", "/recursos/como-definir-un-mvp-sin-construir-de-mas"],
+            ].map(([category,title,href]) => <Link className="homeInsightCard" href={href} key={href}><span>{category}</span><strong>{title}</strong><small>Leer guía →</small></Link>)}
+          </div>
+          <div className="homeInsightsFooter"><Link className="button buttonOutline" href="/recursos">Ver todos los recursos <span>→</span></Link></div>
+        </div>
+      </section>
+
       <section className="section darkSection personalAboutSection">
         <div className="container aboutHome personalAboutHome">
           <div className="aboutPhotoFrame">
