@@ -31,7 +31,13 @@ export function enableGoogleAnalytics() {
 
   window[`ga-disable-${GA_MEASUREMENT_ID}`] = false;
   window.dataLayer = window.dataLayer || [];
-  window.gtag = window.gtag || ((...args: unknown[]) => window.dataLayer?.push(args));
+  // Use the canonical gtag queue shape expected by gtag.js. Google's
+  // bootstrap pushes the function `arguments` object, not a nested array.
+  if (!window.gtag) {
+    window.gtag = function gtag(..._args: unknown[]) {
+      window.dataLayer?.push(arguments);
+    };
+  }
 
   if (!document.getElementById("apt-ga4-script")) {
     const script = document.createElement("script");
