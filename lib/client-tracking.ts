@@ -12,11 +12,27 @@ function getSessionId() {
   return value;
 }
 
-function getAttribution() {
-  if (typeof window === "undefined") return {};
+type Attribution = {
+  utmSource: string;
+  utmMedium: string;
+  utmCampaign: string;
+  utmContent: string;
+  utmTerm: string;
+};
+
+const EMPTY_ATTRIBUTION: Attribution = {
+  utmSource: "",
+  utmMedium: "",
+  utmCampaign: "",
+  utmContent: "",
+  utmTerm: "",
+};
+
+function getAttribution(): Attribution {
+  if (typeof window === "undefined") return EMPTY_ATTRIBUTION;
   const params = new URLSearchParams(window.location.search);
 
-  const current = {
+  const current: Attribution = {
     utmSource: params.get("utm_source") || "",
     utmMedium: params.get("utm_medium") || "",
     utmCampaign: params.get("utm_campaign") || "",
@@ -33,7 +49,7 @@ function getAttribution() {
   }
 
   if (stored) {
-    try { return JSON.parse(stored) as typeof current; } catch { /* noop */ }
+    try { return JSON.parse(stored) as Attribution; } catch { /* noop */ }
   }
   return current;
 }
