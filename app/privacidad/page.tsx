@@ -26,7 +26,7 @@ export default function PrivacyPage() {
         <h2>4. Conservación</h2>
         <p>Los datos se conservarán durante el tiempo necesario para atender la solicitud y gestionar la relación potencial o efectiva, y posteriormente durante los plazos exigibles para atender responsabilidades legales. Los datos de analítica se limitarán a lo necesario para medición y mejora del servicio.</p>
         <h2>5. Proveedores tecnológicos</h2>
-        <p>Para operar la web se utilizan proveedores de infraestructura, base de datos y correo transaccional, actualmente Vercel, Supabase y Resend. Deben mantenerse configurados bajo condiciones contractuales y garantías adecuadas al tratamiento realizado.</p>
+        <p>Para operar la web se utilizan proveedores de infraestructura, base de datos, correo transaccional y analítica, actualmente Vercel, Supabase, Resend y, cuando la persona usuaria acepta la analítica, Google Analytics 4. Deben mantenerse configurados bajo condiciones contractuales y garantías adecuadas al tratamiento realizado.</p>
         <h2>6. Derechos</h2>
         <p>Puedes solicitar acceso, rectificación, supresión, oposición, limitación o portabilidad cuando corresponda, y retirar un consentimiento previamente otorgado escribiendo a {legal.email}. También puedes presentar una reclamación ante la Agencia Española de Protección de Datos.</p>
         <h2>7. Formularios y decisiones automatizadas</h2>

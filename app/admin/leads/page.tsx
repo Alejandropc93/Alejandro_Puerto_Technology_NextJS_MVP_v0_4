@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { ADMIN_COOKIE, verifyAdminSession } from "@/lib/admin-auth";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { LeadStatusSelect } from "@/components/LeadStatusSelect";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Leads", robots: { index: false, follow: false } };
@@ -39,7 +40,7 @@ export default async function LeadsPage() {
       <div className="adminPanel">
         <div className="adminTop">
           <div><p className="eyebrow">PANEL COMERCIAL</p><h1>Leads y conversión</h1><p>Visión operativa de captación, prioridad y seguimiento.</p></div>
-          <form action="/api/admin/logout" method="post"><button className="button buttonLight">Cerrar sesión</button></form>
+          <div className="adminNav"><Link className="button buttonLight" href="/admin/analytics">Analítica</Link><Link className="button buttonLight" href="/admin/launch">Launch</Link><form action="/api/admin/logout" method="post"><button className="button buttonLight">Cerrar sesión</button></form></div>
         </div>
 
         <div className="adminMetrics">

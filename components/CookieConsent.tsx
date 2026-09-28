@@ -27,7 +27,7 @@ export function CookieConsent() {
         <div>
           <strong>Privacidad y medición</strong>
           <p>
-            Usamos almacenamiento técnico para recordar tus preferencias. Con tu permiso, también medimos de forma propia el uso de la web para mejorar contenidos y herramientas.
+            Usamos almacenamiento técnico para recordar tus preferencias. Con tu permiso, medimos el uso de la web mediante analítica propia y Google Analytics 4 para mejorar contenidos, herramientas y conversiones.
           </p>
           <Link href="/cookies">Ver política de cookies y tecnologías equivalentes</Link>
         </div>

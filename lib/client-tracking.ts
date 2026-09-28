@@ -1,4 +1,5 @@
 import { hasAnalyticsConsent } from "@/lib/privacy";
+import { trackGoogleAnalyticsEvent } from "@/lib/google-analytics";
 
 function getSessionId() {
   if (typeof window === "undefined" || !hasAnalyticsConsent()) return "";
@@ -51,10 +52,20 @@ export function getLeadAttribution(cta: string) {
 export function trackEvent(eventName: string, metadata: Record<string, unknown> = {}) {
   if (typeof window === "undefined" || !hasAnalyticsConsent()) return;
   const attribution = getAttribution();
+  const path = `${window.location.pathname}${window.location.search}`;
+
+  trackGoogleAnalyticsEvent(eventName, {
+    path,
+    utm_source: attribution.utmSource,
+    utm_medium: attribution.utmMedium,
+    utm_campaign: attribution.utmCampaign,
+    ...metadata,
+  });
+
   const payload = {
     eventName,
     sessionId: getSessionId(),
-    path: `${window.location.pathname}${window.location.search}`,
+    path,
     referrer: document.referrer,
     ...attribution,
     metadata,

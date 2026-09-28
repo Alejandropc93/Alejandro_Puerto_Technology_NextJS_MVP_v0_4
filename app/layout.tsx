@@ -6,6 +6,7 @@ import { site } from "@/lib/site";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { getSiteUrl } from "@/lib/url";
 import { CookieConsent } from "@/components/CookieConsent";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 
 const baseUrl = getSiteUrl();
 
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="es">
       <body>
         <a className="skipLink" href="#main-content">Saltar al contenido</a>
+        <GoogleAnalytics />
         <AnalyticsTracker />
         <Header />
         <main id="main-content">{children}</main>
