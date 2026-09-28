@@ -2,6 +2,7 @@
 
 import { FormEvent, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { getLeadAttribution, trackEvent } from "@/lib/client-tracking";
 
 type FormState = "idle" | "sending" | "success" | "error";
@@ -61,7 +62,7 @@ export function ContactForm({ compact = false }: { compact?: boolean }) {
       <label className="websiteTrap" aria-hidden="true">Web<input name="website" tabIndex={-1} autoComplete="off" /></label>
       <label className="consentRow">
         <input name="consent" type="checkbox" value="yes" required />
-        <span>Acepto que mis datos se utilicen para responder a esta solicitud.</span>
+        <span>Acepto que mis datos se utilicen para responder a esta solicitud y he leído la <Link href="/privacidad">Política de privacidad</Link>.</span>
       </label>
       <button className="button buttonPrimary" type="submit" disabled={state === "sending"}>
         {state === "sending" ? "Enviando..." : "Enviar solicitud"} <span>→</span>

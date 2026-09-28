@@ -1,5 +1,7 @@
+import { hasAnalyticsConsent } from "@/lib/privacy";
+
 function getSessionId() {
-  if (typeof window === "undefined") return "";
+  if (typeof window === "undefined" || !hasAnalyticsConsent()) return "";
   const key = "apt_session_id";
   let value = sessionStorage.getItem(key);
   if (!value) {
@@ -47,7 +49,7 @@ export function getLeadAttribution(cta: string) {
 }
 
 export function trackEvent(eventName: string, metadata: Record<string, unknown> = {}) {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined" || !hasAnalyticsConsent()) return;
   const attribution = getAttribution();
   const payload = {
     eventName,

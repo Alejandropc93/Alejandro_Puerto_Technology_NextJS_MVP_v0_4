@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { PrivacySettingsButton } from "./PrivacySettingsButton";
 
 const tools = [
   ["Project Health Check", "/project-health-check"],
@@ -30,10 +31,12 @@ export function Footer() {
           {tools.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
         </div>
         <div>
-          <strong>Empezar</strong>
-          <Link href="/tools">Explorar APT Lab</Link>
-          <Link href="/recursos">Leer recursos</Link>
-          <Link href="/contacto">Hablemos de tu proyecto</Link>
+          <strong>Información</strong>
+          <Link href="/contacto">Contacto</Link>
+          <Link href="/aviso-legal">Aviso legal</Link>
+          <Link href="/privacidad">Privacidad</Link>
+          <Link href="/cookies">Cookies</Link>
+          <PrivacySettingsButton />
         </div>
       </div>
       <div className="container footerBottom">

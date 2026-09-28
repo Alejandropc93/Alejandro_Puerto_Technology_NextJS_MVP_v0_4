@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { site } from "@/lib/site";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { getSiteUrl } from "@/lib/url";
+import { CookieConsent } from "@/components/CookieConsent";
 
 const baseUrl = getSiteUrl();
 
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
         <main id="main-content">{children}</main>
         <Footer />
+        <CookieConsent />
       </body>
     </html>
   );
