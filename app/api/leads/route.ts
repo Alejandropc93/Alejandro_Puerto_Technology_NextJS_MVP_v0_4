@@ -28,7 +28,7 @@ type MvpPlannerPayload = {
 };
 
 const allowedProfiles = new Set(["empresa", "emprendedor", "profesional"]);
-const allowedSources = new Set(["website", "contact", "project-health-check", "delivery-planner", "executive-status-generator", "mvp-planner"]);
+const allowedSources = new Set(["website", "contact", "project-health-check", "delivery-planner", "executive-status-generator", "mvp-planner", "kickoff-checklist"]);
 
 function emailLooksValid(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

@@ -50,6 +50,18 @@ export default function ResourcesPage() {
           </div>
 
           <div className="resourcesGrid">
+            <article className="resourceLeadMagnetCard">
+              <div>
+                <p className="eyebrow eyebrowLight">DESCARGABLE · PROJECT KICKOFF</p>
+                <h2>Project Kickoff Checklist</h2>
+                <p>Más de 40 comprobaciones para arrancar un proyecto tecnológico con objetivos, alcance, responsables, capacidad, riesgos y criterios de éxito claros.</p>
+              </div>
+              <div className="resourceLeadMagnetCardAside">
+                <strong>PDF práctico e imprimible</strong>
+                <small>Ideal para kickoffs, nuevas fases y proyectos con varios equipos o proveedores.</small>
+                <Link className="button buttonLight" href="/recursos/project-kickoff-checklist">Conseguir checklist <span>→</span></Link>
+              </div>
+            </article>
             {resources.map((resource, index) => (
               <article className="resourceCard" key={resource.slug}>
                 <div className="resourceCardTop">

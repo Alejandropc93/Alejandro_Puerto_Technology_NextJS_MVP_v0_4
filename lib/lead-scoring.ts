@@ -22,6 +22,7 @@ export function scoreLead(input: ScoreInput) {
   else if (input.source === "delivery-planner") score += 18;
   else if (input.source === "executive-status-generator") score += 16;
   else if (input.source === "mvp-planner") score += 18;
+  else if (input.source === "kickoff-checklist") score += 12;
   else if (input.source === "contact") score += 10;
 
   if (typeof input.healthScore === "number") {
