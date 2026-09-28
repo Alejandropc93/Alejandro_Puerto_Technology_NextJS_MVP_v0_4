@@ -6,6 +6,7 @@ import { site } from "@/lib/site";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { getSiteUrl } from "@/lib/url";
 import { CookieConsent } from "@/components/CookieConsent";
+import { Analytics } from "@vercel/analytics/next";
 
 const baseUrl = getSiteUrl();
 
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main id="main-content">{children}</main>
         <Footer />
         <CookieConsent />
+        <Analytics />
       </body>
     </html>
   );
